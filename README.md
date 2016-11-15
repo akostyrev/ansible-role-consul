@@ -1,8 +1,6 @@
 consul
 =======
 
-[![Ansible Role](https://img.shields.io/ansible/role/3300.svg)](https://galaxy.ansible.com/list#/roles/3300)
-
 Installs and configures Consul
 
 Requirements
@@ -176,4 +174,5 @@ BSD
 Author Information
 ------------------
 
-Kevin Brebanov
+Inspired by:
+- Kevin Brebanov's [consul role](https://github.com/kbrebanov/ansible-consul)

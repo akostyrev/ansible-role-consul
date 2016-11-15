@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Kevin Brebanov
+  author: Aleksandr Kostyrev
   description: Installs and configures Consul
   company:
   # Some suggested licenses:
