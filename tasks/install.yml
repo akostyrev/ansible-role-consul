@@ -1,0 +1,15 @@
+---
+
+- name: Download Consul
+  get_url: >
+    url={{ consul_url }}
+    dest={{ consul_download_dir }}/consul.zip
+    sha256sum={{ consul_sha256sum }}
+  tags: consul
+
+- name: Unzip Consul to installation directory
+  unarchive: >
+    src={{ consul_download_dir }}/consul.zip
+    dest={{ consul_install_dir }}
+    copy=no
+  tags: consul

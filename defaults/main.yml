@@ -1,5 +1,6 @@
 ---
 # defaults file for consul
+consul_create_user: true
 
 consul_version: 0.5.2
 consul_sha256sum: 171cf4074bfca3b1e46112105738985783f19c47f4408377241b868affa9d445
@@ -92,6 +93,8 @@ consul_ui_dir: "{{ consul_webui_install_dir }}/dist"
 consul_verify_incoming: false
 consul_verify_outgoing: false
 consul_verify_server_hostname: false
+
+consul_iptables_enable: false
 
 consul_services: []
 consul_checks: []

@@ -1,0 +1,16 @@
+---
+
+- name: Create Consul group
+  group: name={{ consul_group }} system=yes state=present
+  tags: consul
+
+- name: Create Consul user
+  user: >
+    name={{ consul_user }}
+    shell=/bin/false
+    createhome={{ consul_user_create_home }}
+    home={{ consul_user_home if consul_user_create_home and consul_user_home is defined else omit }}
+    group={{ consul_group }}
+    system=yes
+    state=present
+  tags: consul

@@ -176,3 +176,4 @@ Author Information
 
 Inspired by:
 - Kevin Brebanov's [consul role](https://github.com/kbrebanov/ansible-consul)
+- Brian Shumate's [consul role](https://github.com/brianshumate/ansible-consul)
