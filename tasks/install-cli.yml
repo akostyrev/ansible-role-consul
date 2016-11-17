@@ -1,0 +1,16 @@
+---
+
+- name: download consul-cli
+  get_url:
+    url: "{{ consul_cli_url }}"
+    dest: "{{ consul_download_dir }}/{{ consul_cli_tar }}"
+
+- name: Unzip Consul Cli to installation directory
+  unarchive: >
+    src={{ consul_download_dir }}/{{ consul_cli_tar }}
+    dest={{ consul_install_dir }}
+    extra_opts="--strip-components=1"
+    owner=root
+    group={{ consul_group }}
+    mode='0750'
+    copy=no

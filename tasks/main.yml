@@ -8,6 +8,10 @@
 - include: install.yml
   tags: consul_install
 
+- include: install-cli.yml
+  when: consul_install_consul_cli
+  tags: consul_cli
+
 - include: config.yml
   tags: consul_config
 
