@@ -25,6 +25,7 @@
   unarchive: >
     src={{ consul_download_dir }}/consul-webui.zip
     dest={{ consul_webui_install_dir }}
+    creates={{ consul_webui_install_dir }}/index.html
     copy=no
 
   tags:
