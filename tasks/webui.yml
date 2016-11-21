@@ -27,6 +27,9 @@
     dest={{ consul_webui_install_dir }}
     creates={{ consul_webui_install_dir }}/index.html
     copy=no
+  tags:
+    - consul
+    - consul-webui
 
   tags:
     - consul

@@ -21,4 +21,6 @@
     src={{ consul_download_dir }}/consul.zip
     dest={{ consul_install_dir }}
     copy=no
-  tags: consul
+  tags:
+    - consul
+    - consul-unzip
