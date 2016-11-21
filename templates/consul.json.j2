@@ -138,7 +138,7 @@
 {% if consul_retry_interval_wan %}
   "retry_interval_wan": "{{ consul_retry_interval_wan }}",
 {% endif %}
-{% if consul_retry_join and consul_server %}
+{% if consul_retry_join %}
   "retry_join": [
 {% for retry_address in consul_retry_join %}
 {% if not loop.last %}
