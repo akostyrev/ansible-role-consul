@@ -1,1 +1,1 @@
-CMD_OPTS="agent {% if consul_server %} -server {% endif %} {% if consul_bootstrap_expect and consul_server %} -bootstrap-expect={{ consul_bootstrap_expect }} {% endif %} -config-dir={{ consul_config_dir }} -data-dir=/var/lib/consul"
+CMD_OPTS="agent {% if consul_server %} -server {% endif %} {% if consul_bootstrap_expect and consul_server %} -bootstrap-expect={{ consul_bootstrap_expect }} {% endif %} -config-dir={{ consul_config_dir }} -data-dir=/var/lib/consul {% if consul_webui %} -ui {% endif %}"

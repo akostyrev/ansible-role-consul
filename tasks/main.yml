@@ -15,12 +15,6 @@
 - include: config.yml
   tags: consul_config
 
-- include: webui.yml
-  when: consul_webui
-  tags:
-    - consul
-    - consul-webui
-
 - include: iptables.yml
   when: consul_iptables_enable
   tags:

@@ -95,6 +95,30 @@
 {% if consul_node_name %}
   "node_name": "{{ consul_node_name }}",
 {% endif %}
+
+{% if consul_retry_join %}
+  "retry_join": [
+{% for retry_address in consul_retry_join %}
+{% if not loop.last %}
+    "{{ retry_address }}",
+{% else %}
+    "{{ retry_address }}"
+{% endif %}
+{% endfor %}
+  ],
+{% endif %}
+{% if consul_retry_join_wan and consul_server %}
+  "retry_join_wan": [
+{% for retry_wan_address in consul_retry_join_wan %}
+{% if not loop.last %}
+    "{{ retry_wan_address }}",
+{% else %}
+    "{{ retry_wan_address }}"
+{% endif %}
+{% endfor %}
+  ],
+{% endif %}
+
 {% if consul_ports_config  %}
   "ports": {
     "dns": {{ consul_ports_dns }},
@@ -126,9 +150,7 @@
     "statsd_address": "{{ consul_statsd_address }}"
   },
 {% endif %}
-  "performance": {
-    "raft_multiplier": 1
-  },
+
 {% if consul_rejoin_after_leave %}
   "rejoin_after_leave": true,
 {% endif %}
@@ -137,28 +159,6 @@
 {% endif %}
 {% if consul_retry_interval_wan %}
   "retry_interval_wan": "{{ consul_retry_interval_wan }}",
-{% endif %}
-{% if consul_retry_join %}
-  "retry_join": [
-{% for retry_address in consul_retry_join %}
-{% if not loop.last %}
-    "{{ retry_address }}",
-{% else %}
-    "{{ retry_address }}"
-{% endif %}
-{% endfor %}
-  ],
-{% endif %}
-{% if consul_retry_join_wan and consul_server %}
-  "retry_join_wan": [
-{% for retry_wan_address in consul_retry_join_wan %}
-{% if not loop.last %}
-    "{{ retry_wan_address }}",
-{% else %}
-    "{{ retry_wan_address }}"
-{% endif %}
-{% endfor %}
-  ],
 {% endif %}
 {% if consul_server_name %}
   "server_name": "{{ consul_server_name }}",
@@ -207,7 +207,9 @@
 {% if consul_verify_server_hostname %}
   "verify_server_hostname": true,
 {% endif %}
-{% if consul_ui_dir and consul_webui %}
-  "ui_dir": "{{ consul_ui_dir }}"
-{% endif %}
+
+  "performance": {
+    "raft_multiplier": 1
+  }
+
 }
