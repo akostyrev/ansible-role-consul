@@ -16,15 +16,26 @@
     owner=root
     group=root
     mode=0755
+  when: ansible_os_family == 'RedHat'
   notify: restart consul
   tags:
     - consul
     - consul-template
 
-- name: update sysconfig /etc/sysconfig/{{ consul_service_name }}
+- name: upstart init script
+  template:
+    src: "consul.upstart.conf.j2"
+    dest: /etc/init/consul.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_os_family == 'Debian'
+  notify: restart consul
+
+- name: update /etc/{{ consul_sysconfig_dir }}/{{ consul_service_name }}
   template:
     src: sysconfig.j2
-    dest: /etc/sysconfig/{{ consul_service_name }}
+    dest: "/etc/{{ consul_sysconfig_dir }}/{{ consul_service_name }}"
     owner: root
     group: root
     mode: '0644'

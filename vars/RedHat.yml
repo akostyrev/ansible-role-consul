@@ -1,5 +1,5 @@
 ---
-
+consul_sysconfig_dir: sysconfig
 consul_os_packages:
   - libselinux-python
   - git
