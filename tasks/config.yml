@@ -43,6 +43,7 @@
   notify: restart consul
   tags:
     - consul
+    - consul-json
     - consul-template
 
 - name: Create Consul services configuration file
