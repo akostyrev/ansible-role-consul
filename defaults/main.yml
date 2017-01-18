@@ -99,6 +99,7 @@ consul_verify_outgoing: false
 consul_verify_server_hostname: false
 
 consul_iptables_enable: false
+consul_dnsmasq_enable: false
 
 consul_services: []
 consul_checks: []
