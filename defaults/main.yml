@@ -25,6 +25,7 @@ consul_log_file: /var/log/consul.log
 consul_user: consul
 consul_group: consul
 consul_service_name: consul
+consul_service_manage: yes
 
 consul_acl_datacenter: ''
 consul_acl_default_policy: allow
