@@ -8,8 +8,6 @@ consul_sha256sum: 171cf4074bfca3b1e46112105738985783f19c47f4408377241b868affa9d4
 consul_server: false
 consul_webui: false
 
-consul_gomaxprocs: 1
-
 consul_user_create_home: false
 consul_user_home: []
 

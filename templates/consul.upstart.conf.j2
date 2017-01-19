@@ -6,7 +6,7 @@ stop on shutdown
 
 reload signal SIGHUP
 
-env GOMAXPROCS={{ consul_gomaxprocs }}
+env GOMAXPROCS={{ ansible_processor_vcpus }}
 
 respawn
 respawn limit 10 10
