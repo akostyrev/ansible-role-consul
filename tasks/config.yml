@@ -42,6 +42,7 @@
   notify: restart consul
   tags:
     - consul
+    - consul-sysconfig
     - consul-template
 
 - name: Create Consul configuration file
