@@ -67,7 +67,9 @@
     mode: '0644'
   when: consul_services|length > 0
   notify: reload consul
-  tags: consul
+  tags:
+    - consul
+    - consul-services
 
 - name: Create Consul checks configuration file
   template:
@@ -78,7 +80,9 @@
     mode: '0644'
   notify: reload consul
   when: consul_checks|length > 0
-  tags: consul
+  tags:
+    - consul
+    - consul-checks
 
 - name: Create Consul watches configuration file
   template: >
