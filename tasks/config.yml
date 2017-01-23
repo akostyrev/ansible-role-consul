@@ -59,22 +59,22 @@
     - consul-template
 
 - name: Create Consul services configuration file
-  template: >
-    src=services.json.j2
-    dest={{ consul_config_dir }}/services.json
-    owner=root
-    group=root
-    mode=0644
+  template:
+    src: services.json.j2
+    dest: "{{ consul_config_dir }}/services.json"
+    owner: root
+    group: root
+    mode: '0644'
   notify: reload consul
   tags: consul
 
 - name: Create Consul checks configuration file
-  template: >
-    src=checks.json.j2
-    dest={{ consul_config_dir }}/checks.json
-    owner=root
-    group=root
-    mode=0644
+  template:
+    src: checks.json.j2
+    dest: "{{ consul_config_dir }}/checks.json"
+    owner: root
+    group: root
+    mode: '0644'
   notify: reload consul
   tags: consul
 
