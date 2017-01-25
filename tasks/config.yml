@@ -60,9 +60,15 @@
 
 - include: services.yml
   when: consul_services|length > 0 or consul_services_bulk|length > 0
+  tags:
+    - consul
+    - consul-services
 
 - include: checks.yml
   when: consul_checks|length > 0 or consul_checks_bulk |length > 0
+  tags:
+    - consul
+    - consul-checks
 
 - name: Create Consul watches configuration file
   template: >
