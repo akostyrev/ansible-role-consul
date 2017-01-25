@@ -2,7 +2,7 @@
 
 - name: configure consul checks
   copy:
-    dest: '{{ consul_conf_dir }}/check-{{ item.key }}.json'
+    dest: '{{ consul_config_dir }}/check-{{ item.key }}.json'
     owner: root
     group: root
     mode: '0644'
@@ -12,7 +12,7 @@
 
 - name: configure consul bulk checks
   copy:
-    dest: "{{ consul_conf_dir}}/checks.json"
+    dest: "{{ consul_config_dir }}/checks.json"
     owner: root
     group: root
     mode: '0644'

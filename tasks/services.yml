@@ -2,7 +2,7 @@
 
 - name: configure consul services
   copy:
-    dest: '{{ consul_conf_dir }}/service-{{ item.key }}.json'
+    dest: '{{ consul_config_dir }}/service-{{ item.key }}.json'
     owner: root
     group: root
     mode: '0644'
@@ -12,7 +12,7 @@
 
 - name: configure consul bulk services
   copy:
-    dest: "{{ consul_conf_dir}}/services.json"
+    dest: "{{ consul_config_dir }}/services.json"
     owner: root
     group: root
     mode: '0644'
