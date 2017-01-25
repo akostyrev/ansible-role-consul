@@ -58,31 +58,11 @@
     - consul-json
     - consul-template
 
-- name: Create Consul services configuration file
-  template:
-    src: services.json.j2
-    dest: "{{ consul_config_dir }}/services.json"
-    owner: root
-    group: root
-    mode: '0644'
-  when: consul_services|length > 0
-  notify: reload consul
-  tags:
-    - consul
-    - consul-services
+- include: services.yml
+  when: consul_services|length > 0 or consul_services_bulk|length > 0
 
-- name: Create Consul checks configuration file
-  template:
-    src: checks.json.j2
-    dest: "{{ consul_config_dir }}/checks.json"
-    owner: root
-    group: root
-    mode: '0644'
-  notify: reload consul
-  when: consul_checks|length > 0
-  tags:
-    - consul
-    - consul-checks
+- include: checks.yml
+  when: consul_checks|length > 0 or consul_checks_bulk |length > 0
 
 - name: Create Consul watches configuration file
   template: >

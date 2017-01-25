@@ -1,0 +1,27 @@
+---
+
+- block:
+    - name: configure consul checks
+      copy:
+        dest: '{{ consul_conf_dir }}/check-{{ item.key }}.json'
+        owner: root
+        group: root
+        mode: '0644'
+        content: "{{ { 'check': { 'name': item.value.name|default(item.key) } | combine(item.value) } | to_nice_json }}"
+      with_dict: "{{ consul_checks }}"
+      notify: reload consul
+
+    - name: configure consul bulk checks
+      copy:
+        dest: "{{ consul_conf_dir}}/checks.json"
+        owner: root
+        group: root
+        mode: '0644'
+        content: "{{ { 'checks': consul_checks_bulk } | to_nice_json }}"
+      when: consul_checks_bulk | length > 0
+      notify: reload consul
+
+  notify: reload consul
+  tags:
+    - consul
+    - consul-checks
