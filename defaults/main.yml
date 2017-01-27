@@ -105,6 +105,7 @@ consul_services: {}       # dict of individual consul service files to render
 consul_services_bulk: []  # array of services to render in one file (services.json)
 consul_checks: {}         # dict of individual checks files to render
 consul_checks_bulk: []    # array of checks to render in one file (checks.json)
+consul_watches: []
 
 consul_install_consul_cli: true
 consul_cli_version: 0.3.1
