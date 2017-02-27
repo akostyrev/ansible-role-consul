@@ -17,6 +17,7 @@
 
 - include: dnsmasq.yml
   when: consul_dnsmasq_enable
+  tags: consul_dnsmasq
 
 - include: iptables.yml
   when: consul_iptables_enable
