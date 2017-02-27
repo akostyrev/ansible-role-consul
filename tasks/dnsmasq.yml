@@ -26,3 +26,12 @@
     name: dnsmasq
     state: started
     enabled: yes
+
+- name: ensure dnsmasq is used for resolving dns
+  lineinfile:
+    insertbefore: BOF
+    state: present
+    line: nameserver 127.0.0.1
+    dest: /etc/resolvconf/resolv.conf.d/consul
+    create: yes
+  when: ansible_os_family == 'Debian'
