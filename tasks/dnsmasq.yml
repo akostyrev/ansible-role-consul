@@ -21,13 +21,7 @@
     dest: /etc/dnsmasq.d/10-consul
   notify: restart dnsmasq
 
-- name: start dnsmasq
-  service:
-    name: dnsmasq
-    state: started
-    enabled: yes
-
-- name: ensure dnsmasq is used for resolving dns
+- name: ensure dnsmasq is used for resolving dns on Debian-based systems
   lineinfile:
     insertbefore: BOF
     state: present
@@ -35,3 +29,32 @@
     dest: /etc/resolvconf/resolv.conf.d/consul
     create: yes
   when: ansible_os_family == 'Debian'
+
+# ensure dnsmasq is used for resolving dns on Redhat-based systems
+- block:
+    - name: Insert 127.0.0.1 into /etc/resolv.conf
+      lineinfile:
+        insertbefore: BOF
+        state: present
+        line: nameserver 127.0.0.1
+        dest: /etc/resolv.conf
+        create: yes
+    - name: Insert prepend domain-name-servers 127.0.0.1 into /etc/dhcp/dhclient.conf
+      lineinfile:
+        insertafter: EOF
+        state: present
+        line: "prepend domain-name-servers 127.0.0.1;"
+        dest: /etc/dhcp/dhclient.conf
+        create: yes
+    - name: ensure dnsmasq reads dir /etc/dnsmasq.d
+      replace:
+        dest: "/etc/dnsmasq.conf"
+        regexp: "^#conf-dir=/etc/dnsmasq.d"
+        replace: "^conf-dir=/etc/dnsmasq.d"
+  when: ansible_os_family == 'RedHat'
+
+- name: start dnsmasq
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
