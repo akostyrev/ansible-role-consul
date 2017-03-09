@@ -5,6 +5,13 @@
     cache_valid_time: 3600
   when: ansible_os_family == 'Debian'
 
+- name: prevent daemons from starting after installing a package
+  copy:
+    dest: /usr/sbin/policy-rc.d
+    mode: '0755'
+    content: "#!/bin/sh\nexit 101\n"
+  when: ansible_os_family == 'Debian'
+
 - name: install dnsmasq
   package:
     name: dnsmasq
