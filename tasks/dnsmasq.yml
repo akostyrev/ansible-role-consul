@@ -60,6 +60,9 @@
         replace: "conf-dir=/etc/dnsmasq.d"
   when: ansible_os_family == 'RedHat'
 
+- name: avoid restarting dnsmasq twice if any config change notified service
+  meta: flush_handlers
+
 - name: start dnsmasq
   service:
     name: dnsmasq

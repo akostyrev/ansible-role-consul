@@ -1,0 +1,8 @@
+- name: Create Consul watches configuration file
+  template: >
+    src=watches.json.j2
+    dest={{ consul_config_dir }}/watches.json
+    owner=root
+    group=root
+    mode=0644
+  notify: reload consul

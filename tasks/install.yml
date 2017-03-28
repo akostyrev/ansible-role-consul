@@ -10,6 +10,10 @@
   with_items: "{{ consul_os_packages }}"
   tags: installation
 
+- include: user.yml
+  when: consul_create_user
+  tags: consul_user
+
 - name: Download Consul
   get_url: >
     url={{ consul_url }}
@@ -25,3 +29,10 @@
   tags:
     - consul
     - consul-unzip
+
+- include: install-cli.yml
+  when: consul_install_consul_cli
+  tags: consul_cli
+
+- include: configure.yml
+  tags: consul_config

@@ -1,30 +1,11 @@
 ---
 # tasks file for consul
 
-- include: user.yml
-  when: consul_create_user
-  tags: consul_user
-
 - include: install.yml
   tags: consul_install
 
-- include: install-cli.yml
-  when: consul_install_consul_cli
-  tags: consul_cli
+- include: config-consul.yml
+  tags: consul_json
 
-- include: config.yml
-  tags: consul_config
-
-- include: dnsmasq.yml
-  when: consul_dnsmasq_enable
-  tags: consul_dnsmasq
-
-- include: iptables.yml
-  when: consul_iptables_enable
-  tags:
-    - consul  
-    - consul-iptables
-
-- name: Ensure Consul service is started and enabled on boot
-  service: name={{ consul_service_name }} state=started enabled=yes
-  tags: consul
+- include: service.yml
+  tags: consul_service

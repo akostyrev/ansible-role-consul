@@ -1,0 +1,30 @@
+- name: Create Consul configuration file
+  template: >
+    src=consul.json.j2
+    dest={{ consul_config_dir }}/consul.json
+    owner=root
+    group={{ consul_config_file_group }}
+    mode={{ consul_config_file_mode }}
+  notify: restart consul
+  tags:
+    - consul
+    - consul-json
+    - consul-template
+
+- include: services.yml
+  when: consul_services|length > 0 or consul_services_bulk|length > 0
+  tags:
+    - consul
+    - consul-services
+
+- include: checks.yml
+  when: consul_checks|length > 0 or consul_checks_bulk |length > 0
+  tags:
+    - consul
+    - consul-checks
+
+- include: watches.yml
+  when: consul_watches|length > 0
+  tags:
+    - consul
+    - consul-watches
