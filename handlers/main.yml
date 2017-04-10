@@ -6,7 +6,9 @@
     name: "{{ consul_service_name }}"
     state: restarted
     enabled: yes
-  when: consul_service_manage
+  when:
+    - consul_service_manage
+    - not ansible_check_mode
   tags: consul
 
 - name: reload consul
