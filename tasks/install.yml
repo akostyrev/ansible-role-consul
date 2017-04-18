@@ -14,11 +14,59 @@
   when: consul_create_user
   tags: consul_user
 
+- block:
+    - name: download hashicorp gpg key file from keybase
+      get_url:
+        url: https://keybase.io/hashicorp/key.asc
+        dest: "{{ consul_download_dir }}/hashicorp.asc"
+        validate_certs: "{{ consul_validate_certs }}"
+
+    - name: install gnupg package
+      become: yes
+      package:
+        name: gnupg
+        state: present
+
+    - name: import hashicorp gpg key
+      command: gpg --import "{{ consul_download_dir }}/hashicorp.asc"
+      changed_when: no
+
+    - name: download consul checksum signature file
+      get_url:
+        url: "{{ consul_signature_url }}"
+        dest: "{{ consul_download_dir }}/{{ consul_signature_file }}"
+        validate_certs: "{{ consul_validate_certs }}"
+        force: yes
+  when: consul_verify_checksum_signature
+
+- name: Get consul checksum file
+  get_url:
+    url: "{{ consul_checksum_file_url }}"
+    dest: "{{ consul_download_dir }}"
+    validate_certs: "{{ consul_validate_certs }}"
+
+- name: verify checksum file
+  command: gpg --batch --verify {{ consul_download_dir }}/{{ consul_signature_file }} {{ consul_download_dir }}/{{ consul_checksum_file }}
+  changed_when: no
+  register: gpg_check
+  when: consul_verify_checksum_signature
+  failed_when: gpg_check.rc == 1
+  tags: gpg_check
+
+- name: Get checksum of consul zip
+  shell: "grep {{ consul_zip }} {{ consul_download_dir }}/{{ consul_checksum_file }}"
+  register: chksum
+  changed_when: False
+  tags:
+    - skip_ansible_lint
+
 - name: Download Consul
-  get_url: >
-    url={{ consul_url }}
-    dest={{ consul_download_dir }}/consul.zip
-    sha256sum={{ consul_sha256sum }}
+  get_url:
+    url: "{{ consul_zip_url }}"
+    dest: "{{ consul_download_dir }}/consul.zip"
+    checksum: "sha256:{{ chksum.stdout.split(' ')|first }}"
+    validate_certs: "{{ consul_validate_certs }}"
+  when: not ansible_check_mode
   tags: consul
 
 - name: Unzip Consul to installation directory

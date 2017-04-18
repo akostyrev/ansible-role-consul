@@ -1,10 +1,17 @@
+- name: include base config settings
+  include_vars: config.yml
+
+- name: set consul configuration
+  set_fact:
+    consul_config: "{{ consul_base_config | combine(consul_config) }}"
+
 - name: Create Consul configuration file
-  template: >
-    src=consul.json.j2
-    dest={{ consul_config_dir }}/consul.json
-    owner=root
-    group={{ consul_config_file_group }}
-    mode={{ consul_config_file_mode }}
+  copy:
+    content: "{{ consul_config | to_nice_json }}"
+    dest: "{{ consul_config_dir }}/consul.json"
+    owner: root
+    group: "{{ consul_config_file_group }}"
+    mode: "{{ consul_config_file_mode }}"
   notify: restart consul
   tags:
     - consul
