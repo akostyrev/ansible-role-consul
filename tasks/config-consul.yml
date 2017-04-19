@@ -7,7 +7,7 @@
 
 - name: Create Consul configuration file
   copy:
-    content: "{{ consul_config | to_nice_json }}"
+    content: "{{ consul_config | to_nice_json }}\n"
     dest: "{{ consul_config_dir }}/consul.json"
     owner: root
     group: "{{ consul_config_file_group }}"
