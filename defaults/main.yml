@@ -35,6 +35,7 @@ consul_service_manage: yes
 consul_iptables_enable: false
 consul_dnsmasq_enable: false
 
+consul_bootstrap_expect: 3
 consul_config: {}         # config settings passed to consul.json conf file
 consul_services: {}       # dict of individual consul service files to render
 consul_services_bulk: []  # array of services to render in one file (services.json)
