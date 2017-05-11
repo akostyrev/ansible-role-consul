@@ -69,14 +69,29 @@
   when: not ansible_check_mode
   tags: consul
 
+- name: create consul binary directory
+  file:
+    state: directory
+    path: "{{ consul_install_dir }}/consul-{{ consul_version }}"
+    owner: 0
+    group: 0
+    recurse: yes
+
 - name: Unzip Consul to installation directory
-  unarchive: >
-    src={{ consul_download_dir }}/consul.zip
-    dest={{ consul_install_dir }}
-    copy=no
+  unarchive:
+    src: "{{ consul_download_dir }}/consul.zip"
+    dest: "{{ consul_install_dir }}/consul-{{ consul_version }}"
+    copy: no
+    creates: "{{ consul_install_dir }}/consul-{{ consul_version }}/consul"
   tags:
     - consul
     - consul-unzip
+
+- name: symlink consul binary
+  file:
+    state: link
+    src: "{{ consul_install_dir }}/consul-{{ consul_version }}/consul"
+    dest: "{{ consul_install_dir }}/consul"
 
 - include: install-cli.yml
   when: consul_install_consul_cli
