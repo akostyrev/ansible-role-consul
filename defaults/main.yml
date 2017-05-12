@@ -1,7 +1,7 @@
 ---
 # defaults file for consul
 consul_create_user: true
-consul_version: 0.8.2
+consul_version: 0.8.3
 consul_server: false
 consul_webui: false
 
