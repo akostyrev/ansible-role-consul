@@ -1,6 +1,19 @@
 - name: include base config settings
   include_vars: config.yml
 
+- name: update /etc/{{ consul_sysconfig_dir }}/{{ consul_service_name }}
+  template:
+    src: sysconfig.j2
+    dest: "/etc/{{ consul_sysconfig_dir }}/{{ consul_service_name }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart consul
+  tags:
+    - consul
+    - consul-sysconfig
+    - consul-template
+
 - name: set consul configuration
   set_fact:
     consul_config: "{{ consul_base_config | combine(consul_config) }}"
