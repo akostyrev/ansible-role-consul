@@ -1,3 +1,6 @@
+- name: include OS-specific vars
+  include: vars.yml
+
 - name: include base config settings
   include_vars: config.yml
 
