@@ -5,14 +5,14 @@ consul_version: 0.8.3
 consul_server: false
 consul_webui: false
 
-consul_user_create_home: false
-consul_user_home: []
+consul_user_create_home: true
+consul_user_home: /var/lib/consul
 
-consul_config_dir: /etc/consul.d
-consul_data_dir: /tmp/consul
+consul_config_dir: /etc/consul
+consul_data_dir: "{{ consul_user_home }}"
 
-consul_config_file_mode: '0644'
-consul_config_file_group: root
+consul_config_file_mode: '0640'
+consul_config_file_group: consul
 
 consul_download_dir: /root
 consul_install_dir: /usr/local/bin
