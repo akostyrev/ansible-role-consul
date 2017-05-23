@@ -42,8 +42,3 @@ consul_services_bulk: []  # array of services to render in one file (services.js
 consul_checks: {}         # dict of individual checks files to render
 consul_checks_bulk: []    # array of checks to render in one file (checks.json)
 consul_watches: []
-
-consul_install_consul_cli: true
-consul_cli_version: 0.3.1
-consul_cli_tar: "consul-cli_{{ consul_cli_version }}_linux_amd64.tar.gz"
-consul_cli_url: "https://github.com/CiscoCloud/consul-cli/releases/download/v{{ consul_cli_version }}/{{ consul_cli_tar }}"

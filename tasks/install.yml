@@ -91,9 +91,5 @@
     src: "{{ consul_install_dir }}/consul-{{ consul_version }}/consul"
     dest: "{{ consul_install_dir }}/consul"
 
-- include: install-cli.yml
-  when: consul_install_consul_cli
-  tags: consul_cli
-
 - include: configure.yml
   tags: consul_config
