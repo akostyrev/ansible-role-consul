@@ -24,7 +24,7 @@
 
 - name: configure dnsmasq for consul domain
   copy:
-    content: "server=/consul/127.0.0.1#8600"
+    content: "server=/consul/127.0.0.1#8600\n"
     dest: /etc/dnsmasq.d/10-consul
   notify: restart dnsmasq
 
