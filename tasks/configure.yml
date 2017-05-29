@@ -9,7 +9,7 @@
     state=directory
   tags: consul
 
-- name: Create Consul service file
+- name: Create SYSV init script
   template: >
     src=consul.initd.conf.j2
     dest=/etc/init.d/{{ consul_service_name }}
@@ -22,14 +22,26 @@
     - consul
     - consul-template
 
-- name: upstart init script
+- name: Create upstart script
   template:
     src: "consul.upstart.conf.j2"
     dest: /etc/init/consul.conf
     owner: root
     group: root
     mode: 0644
-  when: ansible_os_family == 'Debian'
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_service_mgr == 'upstart'
+  notify: restart consul
+
+- name: Create systemd service
+  template:
+    src: "consul.systemd.j2"
+    dest: /etc/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: 0755
+  when: ansible_service_mgr == 'systemd'
   notify: restart consul
 
 - include: dnsmasq.yml
@@ -39,7 +51,7 @@
 - include: iptables.yml
   when: consul_iptables_enable
   tags:
-    - consul  
+    - consul
     - consul-iptables
 
 - name: avoid restarting consul twice if any config change notified service

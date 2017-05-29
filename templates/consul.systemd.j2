@@ -1,0 +1,17 @@
+[Unit]
+Description=Consul
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Environment=GOMAXPROCS={{ ansible_processor_vcpus }}
+User={{ consul_user }}
+Group={{ consul_group }}
+EnvironmentFile=/etc/{{ consul_sysconfig_dir }}/{{ consul_service_name }}
+ExecStart={{ consul_install_dir }}/consul $CMD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGTERM
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
